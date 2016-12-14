@@ -1,31 +1,43 @@
+var isTriangle = function (side1, side2, side3) {
+  return (side1 < side2 + side3 && side2 < side1 + side3 && side3 < side1 + side2)
+}
+
+
+
 $(document).ready(function () {
-  $(".profile form").submit(function (event) {
+  $(".lengths form").submit(function (event) {
     event.preventDefault();
-    var name = $("#name").val();
-    var gender = parseInt($("#gender").val());
-    var age = parseInt($("#age").val());
-    var justice = parseInt($("#justice").val());
+    var side1 = parseInt($("#side1").val());
+    var side2 = parseInt($("#side2").val());
+    var side3 = parseInt($("#side3").val());
     
-    if ((!name)) {
-      $(".input-name").addClass("has-error");
-      $("#name-warning").text("Please enter your name.");
-    } else {
-      if (age < 18) {
-        $("#political-name").text("Snot-nosed Crybaby");
-        $("#political-reason").text("I'm sorry, but your generation is all about me, me, me! Spells trouble for the future of our country.");
-    } else if (justice > 3) {
-        $("#political-name").text("Violent Liberal");
-        $("#political-reason").text("It's obvious from your Supreme Court preference that you're no fan of justice at all.")
-    } else if (justice > 1) {
-        $("#political-name").text("Hippie");
-        $("#political-reason").text("You have some redeemability, but not much common sense.");
-    } else {
-        $("#political-name").text("Rational Individual");
-        $("#political-reason").text("I honestly have no way of knowing what your political leanings are, based on these simple questions, but you seem relatively reasonable.")
+    if ((!side1)) {
+      $(".side1").addClass("has-error");
+      $("#side1-warning").text("Please enter a length for side 1.");
+    }
+    if ((!side2)) {
+      $(".side2").addClass("has-error");
+      $("#side2-warning").text("Please enter a length for side 2.");
+    }
+    if ((!side3)) {
+      $(".side3").addClass("has-error");
+      $("#side3-warning").text("Please enter a length for side 3.");
     }
 
-    $(".results").show();
+    if (side1 && side2 && side3) {
+      if (isTriangle(side1, side2, side3) && side1 === side2 && side2 === side3) {
+        $("#triangle-name").text("Equilateral");
+      } else if (isTriangle(side1, side2, side3) && (side1 === side2 || side1 === side3 || side2 === side3)) {
+        $("#triangle-name").text("Isosceles");
+      } else if (isTriangle(side1, side2, side3)) {
+        $("#triangle-name").text("Scalene");
+      } else {
+        $("#triangle-name").text("Not a valid triangle");
+      }
+      $(".result").show();
     }
+    
+    
     
   });
 });
