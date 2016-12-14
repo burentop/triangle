@@ -2,7 +2,13 @@ var isTriangle = function (side1, side2, side3) {
   return (side1 < side2 + side3 && side2 < side1 + side3 && side3 < side1 + side2)
 }
 
+var isEquilateral = function (side1, side2, side3) {
+  return side1 === side2 && side2 === side3;
+}
 
+var isIsosceles = function (side1, side2, side3) {
+  return side1 === side2 || side1 === side3 || side2 === side3;
+}
 
 $(document).ready(function () {
   $(".lengths form").submit(function (event) {
@@ -25,9 +31,9 @@ $(document).ready(function () {
     }
 
     if (side1 && side2 && side3) {
-      if (isTriangle(side1, side2, side3) && side1 === side2 && side2 === side3) {
+      if (isTriangle(side1, side2, side3) && isEquilateral(side1, side2, side3)) {
         $("#triangle-name").text("Equilateral");
-      } else if (isTriangle(side1, side2, side3) && (side1 === side2 || side1 === side3 || side2 === side3)) {
+      } else if (isTriangle(side1, side2, side3) && isIsosceles(side1, side2, side3)) {
         $("#triangle-name").text("Isosceles");
       } else if (isTriangle(side1, side2, side3)) {
         $("#triangle-name").text("Scalene");
